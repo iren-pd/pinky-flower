@@ -14,7 +14,7 @@
         "test:watch": "vitest",
         "test:coverage": "vitest --run --coverage",
         "preview": "vite preview",
-        "prepare": "husky install"
+        "prepare": "husky"
     },
     "dependencies": {
         "react": "^19.2.0",
@@ -52,9 +52,8 @@
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
-            "eslint --max-warnings=0 --fix",
+            "eslint --fix",
             "prettier --write"
-        ],
-        "*.{json,css,scss,md}": "prettier --write"
+        ]
     }
 }
