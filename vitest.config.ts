@@ -14,7 +14,7 @@ export default mergeConfig(
             css: true,
             passWithNoTests: true,
             alias: {
-                '@root': path.resolve(__dirname, './src'),
+                '@root': path.resolve(__dirname, './src')
             },
             coverage: {
                 provider: 'v8',
@@ -26,9 +26,9 @@ export default mergeConfig(
                     'src/main.tsx',
                     'src/**/*.d.ts',
                     'src/**/__mocks__/**',
-                    'src/**/*.stories.tsx',
-                ],
-            },
-        },
-    }),
+                    'src/**/*.stories.tsx'
+                ]
+            }
+        }
+    })
 );

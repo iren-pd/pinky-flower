@@ -6,17 +6,17 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
     server: {
-        port: 3000,
+        port: 3000
     },
     plugins: [react(), eslint(), svgr()],
     base: './',
     build: {
         minify: 'esbuild',
-        target: 'esnext',
+        target: 'esnext'
     },
     resolve: {
         alias: {
-            '@root': path.resolve(__dirname, './src'),
-        },
-    },
+            '@root': path.resolve(__dirname, './src')
+        }
+    }
 });
