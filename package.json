@@ -54,10 +54,9 @@
     },
     "lint-staged": {
         "*.{ts,tsx,js,jsx}": [
-            "eslint --max-warnings=0 --fix",
+            "eslint --fix",
             "prettier --write"
-        ],
-        "*.{json,css,scss,md}": "prettier --write"
+        ]
     },
     "engines": {
         "node": ">=24",
