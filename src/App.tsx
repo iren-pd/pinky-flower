@@ -8,9 +8,11 @@ import { Main } from '@root/components/layout/Main';
 export const App: FC = () => {
     return (
         <ErrorBoundary>
-            <Header />
-            <Main />
-            <Footer />
+            <div className="flex min-h-screen flex-col">
+                <Header />
+                <Main />
+                <Footer />
+            </div>
         </ErrorBoundary>
     );
 };

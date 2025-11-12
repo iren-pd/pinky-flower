@@ -17,9 +17,14 @@
         "prepare": "husky"
     },
     "dependencies": {
+        "@radix-ui/react-slot": "^1.1.0",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.1",
+        "lucide-react": "^0.553.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
         "react-router-dom": "^7.9.5",
+        "tailwind-merge": "^2.5.2",
         "zustand": "^5.0.8"
     },
     "devDependencies": {
@@ -33,6 +38,7 @@
         "@types/react-dom": "^19.2.2",
         "@vitejs/plugin-react": "^5.1.0",
         "@vitest/coverage-v8": "^4.0.8",
+        "autoprefixer": "^10.4.20",
         "eslint": "^9.39.1",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-prettier": "^5.5.4",
@@ -42,7 +48,10 @@
         "husky": "^9.1.7",
         "jsdom": "^27.1.0",
         "lint-staged": "^16.2.6",
+        "postcss": "^8.4.49",
         "prettier": "^3.6.2",
+        "tailwindcss": "^3.4.13",
+        "tailwindcss-animate": "^1.0.7",
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.46.3",
         "vite": "npm:rolldown-vite@7.2.2",

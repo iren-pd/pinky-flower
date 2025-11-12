@@ -10,4 +10,7 @@ const config = {
     }
 };
 
+// Example commit message
+// feat(blog): add comment section
+
 export default config;
