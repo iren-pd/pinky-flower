@@ -1,11 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
+import { Minus, Plus, RotateCcw } from 'lucide-react';
 import type { FC } from 'react';
 
 import { Button } from '@root/components/ui';
 import { useCounter } from '@root/hooks';
-import { Minus, Plus, RotateCcw } from 'lucide-react';
 
 export const HomePage: FC = () => {
     const { count, increase, decrease, resetCount } = useCounter();
+    const { data, isLoading } = useQuery({
+        queryKey: ['greeting'],
+        queryFn: async () => {
+            await new Promise((resolve) => setTimeout(resolve, 300));
+            return 'Fetched via React Query';
+        }
+    });
 
     return (
         <div className="flex flex-col items-center gap-6">
@@ -35,6 +43,7 @@ export const HomePage: FC = () => {
                     </Button>
                 </div>
             </div>
+            <p className="text-sm text-muted-foreground">{isLoading ? 'Loading...' : data}</p>
         </div>
     );
 };
