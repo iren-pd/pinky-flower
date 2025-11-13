@@ -32,8 +32,8 @@ export const LoginForm: FC = () => {
             onSubmit={handleSubmit}
         >
             {({ errors, touched, isSubmitting, handleChange, handleBlur, values }) => (
-                <Form className="grid gap-6">
-                    <div className="grid gap-2">
+                <Form className="grid gap-5 sm:gap-6">
+                    <div className="grid gap-1.5 sm:gap-2">
                         <Label htmlFor="email" className="text-sm font-medium text-foreground">
                             Email
                         </Label>
@@ -49,6 +49,7 @@ export const LoginForm: FC = () => {
                                 handleChange(event);
                             }}
                             onBlur={handleBlur}
+                            className="h-10 text-sm leading-tight sm:h-12 sm:text-base"
                             aria-invalid={touched.email && Boolean(errors.email)}
                             aria-describedby="email-error"
                         />
@@ -59,7 +60,7 @@ export const LoginForm: FC = () => {
                         )}
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-1.5 sm:gap-2">
                         <Label htmlFor="password" className="text-sm font-medium text-foreground">
                             Пароль
                         </Label>
@@ -75,6 +76,7 @@ export const LoginForm: FC = () => {
                                 handleChange(event);
                             }}
                             onBlur={handleBlur}
+                            className="h-10 text-sm leading-tight sm:h-12 sm:text-base"
                             aria-invalid={touched.password && Boolean(errors.password)}
                             aria-describedby="password-error"
                         />
@@ -87,7 +89,11 @@ export const LoginForm: FC = () => {
 
                     {error && <p className="text-sm text-destructive">{error}</p>}
 
-                    <Button type="submit" disabled={isSubmitting || isLoading}>
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting || isLoading}
+                        className="h-10 text-sm sm:h-11 sm:text-base"
+                    >
                         {isLoading ? 'Входим...' : 'Войти'}
                     </Button>
                 </Form>
