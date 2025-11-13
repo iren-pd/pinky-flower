@@ -1,8 +1,9 @@
-import { Form, Formik, type FormikHelpers } from 'formik';
+import { Form, Formik } from 'formik';
 import type { FC } from 'react';
 import * as Yup from 'yup';
 
 import { Button, Input, Label } from '@root/components/ui';
+import { useLogin } from '@root/hooks';
 
 type LoginFormValues = {
     email: string;
@@ -22,13 +23,7 @@ const initialValues: LoginFormValues = {
 };
 
 export const LoginForm: FC = () => {
-    const handleSubmit = (
-        values: LoginFormValues,
-        { setSubmitting }: FormikHelpers<LoginFormValues>
-    ) => {
-        console.log('Submit login form:', values);
-        setSubmitting(false);
-    };
+    const { handleSubmit, isLoading, error, resetError } = useLogin();
 
     return (
         <Formik
@@ -39,9 +34,9 @@ export const LoginForm: FC = () => {
             {({ errors, touched, isSubmitting, handleChange, handleBlur, values }) => (
                 <Form className="grid gap-6">
                     <div className="grid gap-2">
-                        <label htmlFor="email" className="text-sm font-medium text-foreground">
+                        <Label htmlFor="email" className="text-sm font-medium text-foreground">
                             Email
-                        </label>
+                        </Label>
                         <Input
                             id="email"
                             name="email"
@@ -49,7 +44,10 @@ export const LoginForm: FC = () => {
                             placeholder="you@example.com"
                             autoComplete="email"
                             value={values.email}
-                            onChange={handleChange}
+                            onChange={(event) => {
+                                resetError();
+                                handleChange(event);
+                            }}
                             onBlur={handleBlur}
                             aria-invalid={touched.email && Boolean(errors.email)}
                             aria-describedby="email-error"
@@ -72,7 +70,10 @@ export const LoginForm: FC = () => {
                             placeholder="Введите пароль"
                             autoComplete="current-password"
                             value={values.password}
-                            onChange={handleChange}
+                            onChange={(event) => {
+                                resetError();
+                                handleChange(event);
+                            }}
                             onBlur={handleBlur}
                             aria-invalid={touched.password && Boolean(errors.password)}
                             aria-describedby="password-error"
@@ -84,12 +85,10 @@ export const LoginForm: FC = () => {
                         )}
                     </div>
 
-                    <Button
-                        type="submit"
-                        className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-                        disabled={isSubmitting}
-                    >
-                        Войти
+                    {error && <p className="text-sm text-destructive">{error}</p>}
+
+                    <Button type="submit" disabled={isSubmitting || isLoading}>
+                        {isLoading ? 'Входим...' : 'Войти'}
                     </Button>
                 </Form>
             )}
