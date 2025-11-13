@@ -5,12 +5,14 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
 import svgr from 'vite-plugin-svgr';
 
+const repoName = 'pinky-flower';
+
 export default defineConfig({
     server: {
         port: 3000
     },
     plugins: [react(), eslint(), svgr()],
-    base: './',
+    base: `/${repoName}/`,
     build: {
         minify: 'esbuild',
         target: 'esnext'
