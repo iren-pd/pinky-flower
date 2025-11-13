@@ -12,7 +12,7 @@ const LoginPage: FC = () => {
             aria-labelledby="login-heading"
         >
             <section
-                className="w-full max-w-lg space-y-5 rounded-2xl bg-card p-5 shadow-lg sm:space-y-7 sm:p-7"
+                className="w-full max-w-lg space-y-5 rounded-2xl border border-primary/15 bg-card p-5 shadow-lg sm:space-y-7 sm:p-7"
                 aria-describedby="login-description"
             >
                 <header className="space-y-2 text-center sm:space-y-3">

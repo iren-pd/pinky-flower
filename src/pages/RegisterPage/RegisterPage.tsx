@@ -12,7 +12,7 @@ const RegisterPage: FC = () => {
             aria-labelledby="register-heading"
         >
             <section
-                className="w-full max-w-2xl space-y-6 rounded-2xl bg-card p-5 shadow-lg sm:space-y-8 sm:p-8"
+                className="w-full max-w-2xl space-y-6 rounded-2xl border border-primary/15 bg-card p-5 shadow-lg sm:space-y-8 sm:p-8"
                 aria-describedby="register-description"
             >
                 <header className="space-y-2 text-center sm:space-y-3">
