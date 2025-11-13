@@ -1,4 +1,6 @@
 export const RoutesPath = {
     Root: '/',
-    NotFound: '*'
+    NotFound: '*',
+    Login: '/login',
+    Register: '/register'
 } as const;
