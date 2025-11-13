@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AnimatedLogoShort } from '@root/components/common/AnimatedLogoShort';
 import { RegisterForm } from '@root/components/features/RegisterForm';
 import { RoutesPath } from '@root/router/routes';
 
@@ -15,9 +16,7 @@ const RegisterPage: FC = () => {
                 aria-describedby="register-description"
             >
                 <header className="space-y-2 text-center sm:space-y-3">
-                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-3xl sm:h-16 sm:w-16 sm:text-4xl">
-                        🌸
-                    </div>
+                    <AnimatedLogoShort className="mx-auto bg-primary/10" />
                     <h1
                         id="register-heading"
                         className="text-2xl font-semibold text-foreground sm:text-3xl"
