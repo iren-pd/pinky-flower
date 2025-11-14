@@ -9,7 +9,8 @@ const repoName = 'pinky-flower';
 
 export default defineConfig({
     server: {
-        port: 3000
+        port: 3000,
+        strictPort: false
     },
     plugins: [react(), eslint(), svgr()],
     base: `/${repoName}/`,
@@ -17,9 +18,14 @@ export default defineConfig({
         minify: 'esbuild',
         target: 'esnext'
     },
+    preview: {
+        port: 3000,
+        strictPort: false
+    },
     resolve: {
         alias: {
             '@root': path.resolve(__dirname, './src')
         }
-    }
+    },
+    appType: 'spa'
 });

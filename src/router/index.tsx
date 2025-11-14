@@ -20,16 +20,16 @@ export const router = createBrowserRouter(
                     element: <HomePage />
                 },
                 {
-                    path: RoutesPath.NotFound,
-                    element: WithSuspense(<NotFoundPage />)
-                },
-                {
                     path: RoutesPath.Login,
                     element: WithSuspense(<LoginPage />)
                 },
                 {
                     path: RoutesPath.Register,
                     element: WithSuspense(<RegisterPage />)
+                },
+                {
+                    path: RoutesPath.NotFound,
+                    element: WithSuspense(<NotFoundPage />)
                 }
             ]
         }
