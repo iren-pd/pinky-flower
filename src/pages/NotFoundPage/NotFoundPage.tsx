@@ -9,7 +9,7 @@ const notFoundImage = '/pinky-flower/assets/images/404-image.webp';
 
 const NotFoundPage: FC = () => {
     return (
-        <section className="flex min-h-[60vh] flex-col items-center justify-center gap-8 px-4 py-12">
+        <section className="flex min-h-[60vh] flex-col items-center justify-center gap-8">
             <article className="flex flex-col items-center gap-6 text-center">
                 <figure className="relative" aria-label="Иллюстрация ошибки 404">
                     <img
