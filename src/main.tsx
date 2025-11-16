@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 import { router } from '@root/router';
+import '@root/lib/firebase';
 import './index.css';
 
 const queryClient = new QueryClient();
