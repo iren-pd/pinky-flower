@@ -4,6 +4,7 @@ import { ErrorBoundary } from '@root/components/common/ErrorBoundary';
 import { Footer } from '@root/components/layout/Footer';
 import { Header } from '@root/components/layout/Header';
 import { Main } from '@root/components/layout/Main';
+import { Toaster } from '@root/components/ui';
 
 export const App: FC = () => {
     return (
@@ -13,6 +14,7 @@ export const App: FC = () => {
                 <Main />
                 <Footer />
             </div>
+            <Toaster />
         </ErrorBoundary>
     );
 };
