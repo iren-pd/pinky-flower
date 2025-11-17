@@ -1,6 +1,11 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    type User
+} from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { toast } from 'sonner';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -37,6 +42,7 @@ type GoogleAuthUser = {
 type AuthState = {
     isLoading: boolean;
     error: string | null;
+    currentUser: User | null;
     login: (credentials: Credentials) => Promise<void>;
     resetError: () => void;
     registerLoading: boolean;
@@ -44,6 +50,7 @@ type AuthState = {
     register: (data: RegistrationData) => Promise<void>;
     resetRegisterError: () => void;
     saveUserDataFromGoogleAuth: (user: GoogleAuthUser) => Promise<void>;
+    logout: () => Promise<void>;
 };
 
 const useAuthStoreBase = create<AuthState>()(
@@ -51,6 +58,7 @@ const useAuthStoreBase = create<AuthState>()(
         (set) => ({
             isLoading: false,
             error: null,
+            currentUser: null,
             login: async ({ email, phone, password }) => {
                 set(
                     () => ({
@@ -70,11 +78,6 @@ const useAuthStoreBase = create<AuthState>()(
                         throw new Error('Вхід через телефон поки що не підтримується');
                     }
 
-                    console.info('Logged in successfully');
-                    toast.success('Вхід успішний!', {
-                        description: 'Ви увійшли в акаунт'
-                    });
-
                     set(
                         () => ({
                             isLoading: false
@@ -93,7 +96,7 @@ const useAuthStoreBase = create<AuthState>()(
                                 break;
                             case 'auth/wrong-password':
                             case 'auth/invalid-credential':
-                                errorMessage = 'Невірний пароль';
+                                errorMessage = 'Невірний логін або пароль';
                                 break;
                             case 'auth/invalid-email':
                                 errorMessage = 'Невірний формат електронної пошти';
@@ -116,7 +119,6 @@ const useAuthStoreBase = create<AuthState>()(
                     }
 
                     console.error('Login error:', error);
-                    toast.error('Помилка входу', { description: errorMessage });
 
                     set(
                         () => ({
@@ -126,6 +128,7 @@ const useAuthStoreBase = create<AuthState>()(
                         false,
                         { type: 'auth/login/error' }
                     );
+                    throw error;
                 }
             },
             resetError: () => {
@@ -170,11 +173,6 @@ const useAuthStoreBase = create<AuthState>()(
                         updatedAt: new Date().toISOString()
                     });
 
-                    console.info('User registered successfully:', user.uid);
-                    toast.success('Реєстрація успішна!', {
-                        description: 'Ваш акаунт створено'
-                    });
-
                     set(
                         () => ({
                             registerLoading: false
@@ -189,7 +187,6 @@ const useAuthStoreBase = create<AuthState>()(
                         const errorCode = (error as { code?: string }).code;
                         const errorMessageText = error.message || '';
 
-                        // Обрабатываем коды ошибок Firebase
                         switch (errorCode) {
                             case 'auth/email-already-in-use':
                                 errorMessage = 'Електронна пошта вже використовується';
@@ -210,7 +207,6 @@ const useAuthStoreBase = create<AuthState>()(
                                 errorMessage = 'Занадто багато спроб. Спробуйте пізніше';
                                 break;
                             default:
-                                // Обрабатываем случаи, когда ошибка приходит в message (например, EMAIL_EXISTS)
                                 if (
                                     errorMessageText.includes('EMAIL_EXISTS') ||
                                     errorMessageText.includes('email already exists')
@@ -229,7 +225,6 @@ const useAuthStoreBase = create<AuthState>()(
                     }
 
                     console.error('Registration error:', error);
-                    toast.error('Помилка реєстрації', { description: errorMessage });
 
                     set(
                         () => ({
@@ -239,6 +234,7 @@ const useAuthStoreBase = create<AuthState>()(
                         false,
                         { type: 'auth/register/error' }
                     );
+                    throw error; // Пробрасываем ошибку, чтобы хук мог обработать её
                 }
             },
             saveUserDataFromGoogleAuth: async (user: GoogleAuthUser) => {
@@ -258,8 +254,6 @@ const useAuthStoreBase = create<AuthState>()(
                             createdAt: new Date().toISOString(),
                             updatedAt: new Date().toISOString()
                         });
-
-                        console.info('User data saved from Google auth:', user.uid);
                     }
                 } catch (error) {
                     console.error('Error saving user data from Google auth:', error);
@@ -273,10 +267,21 @@ const useAuthStoreBase = create<AuthState>()(
                     false,
                     { type: 'auth/register/resetError' }
                 );
+            },
+            logout: async () => {
+                try {
+                    await signOut(auth);
+                } catch (error) {
+                    console.error('Logout error:', error);
+                }
             }
         }),
         { name: 'auth-store' }
     )
 );
+
+onAuthStateChanged(auth, (user) => {
+    useAuthStoreBase.setState({ currentUser: user });
+});
 
 export const useAuthStore = createSelectors(useAuthStoreBase);
