@@ -35,7 +35,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
             return (
                 <section className="flex min-h-screen flex-col items-center justify-center py-12">
                     <article className="flex h-full w-full max-w-4xl flex-col items-center justify-between gap-6 text-center">
-                        <figure className="relative" aria-label="Иллюстрация ошибки">
+                        <figure className="relative" aria-label="Ілюстрація помилки">
                             <img
                                 src={errorImage}
                                 alt=""
@@ -51,7 +51,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
                                         const fallback = document.createElement('div');
                                         fallback.className =
                                             'flex h-64 w-64 items-center justify-center rounded-full bg-primary/10 text-6xl sm:h-80 sm:w-80 sm:text-8xl';
-                                        fallback.setAttribute('aria-label', 'Ошибка');
+                                        fallback.setAttribute('aria-label', 'Помилка');
                                         fallback.textContent = '⚠️';
                                         parent.replaceChild(fallback, target);
                                     }
@@ -61,19 +61,19 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
 
                         <header className="space-y-3">
                             <h1 className="text-3xl font-bold text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
-                                Что-то пошло не так...
+                                Щось пішло не так...
                             </h1>
                             <p className="mx-auto max-w-md text-sm text-muted-foreground sm:text-base md:text-lg">
-                                Пожалуйста, обновите страницу или попробуйте позже.
+                                Будь ласка, оновіть сторінку або спробуйте пізніше.
                             </p>
                         </header>
 
-                        <nav aria-label="Навигация по странице ошибки">
+                        <nav aria-label="Навігація по сторінці помилки">
                             <div className="flex flex-col items-center gap-4 sm:flex-row">
                                 <Button asChild size="lg" className="gap-2 sm:h-11 sm:px-8">
                                     <Link to={RoutesPath.Root}>
                                         <Home className="h-4 w-4" aria-hidden="true" />
-                                        На главную
+                                        На головну
                                     </Link>
                                 </Button>
                                 <Button
@@ -83,7 +83,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
                                     onClick={() => window.location.reload()}
                                 >
                                     <RefreshCw className="h-4 w-4" aria-hidden="true" />
-                                    Обновить страницу
+                                    Оновити сторінку
                                 </Button>
                             </div>
                         </nav>

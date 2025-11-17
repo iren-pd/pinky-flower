@@ -11,7 +11,7 @@ const NotFoundPage: FC = () => {
     return (
         <section className="flex min-h-[60vh] flex-col items-center justify-center gap-8">
             <article className="flex flex-col items-center gap-6 text-center">
-                <figure className="relative" aria-label="Иллюстрация ошибки 404">
+                <figure className="relative" aria-label="Ілюстрація помилки 404">
                     <img
                         src={notFoundImage}
                         alt=""
@@ -27,7 +27,7 @@ const NotFoundPage: FC = () => {
                                 const fallback = document.createElement('div');
                                 fallback.className =
                                     'flex h-64 w-64 items-center justify-center rounded-full bg-primary/10 text-6xl sm:h-80 sm:w-80 sm:text-8xl';
-                                fallback.setAttribute('aria-label', 'Ошибка 404');
+                                fallback.setAttribute('aria-label', 'Помилка 404');
                                 fallback.textContent = '404';
                                 parent.replaceChild(fallback, target);
                             }
@@ -37,19 +37,19 @@ const NotFoundPage: FC = () => {
 
                 <header className="space-y-3">
                     <h1 className="text-4xl font-bold text-foreground sm:text-5xl md:text-6xl">
-                        Страница не найдена
+                        Сторінка не знайдена
                     </h1>
                     <p className="mx-auto max-w-md text-base text-muted-foreground sm:text-lg">
-                        К сожалению, страница, которую вы ищете, не существует или была перемещена.
+                        На жаль, сторінка, яку ви шукаєте, не існує або була переміщена.
                     </p>
                 </header>
 
-                <nav aria-label="Навигация по странице ошибки">
+                <nav aria-label="Навігація по сторінці помилки">
                     <div className="flex flex-col items-center gap-4 sm:flex-row">
                         <Button asChild size="lg" className="gap-2">
                             <Link to={RoutesPath.Root}>
                                 <Home className="h-4 w-4" aria-hidden="true" />
-                                На главную
+                                На головну
                             </Link>
                         </Button>
                         <Button variant="outline" size="lg" onClick={() => window.history.back()}>
