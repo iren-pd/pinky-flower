@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 
 import { Button, Input, Label } from '@root/components/ui';
 import { useRegister } from '@root/hooks';
+import { formatPhoneNumber } from '@root/lib/utils';
 
 type RegisterFormValues = {
     firstName: string;
@@ -19,7 +20,10 @@ const validationSchema = Yup.object<RegisterFormValues>({
     lastName: Yup.string().trim().required('Обязательное поле'),
     email: Yup.string().email('Введите корректный email').required('Обязательное поле'),
     phone: Yup.string()
-        .matches(/^\+?[0-9\s()-]{10,20}$/, 'Введите номер телефона в международном формате')
+        .matches(
+            /^\+38 \(\d{3}\) \d{3} \d{2} \d{2}$/,
+            'Введите номер телефона в формате +38 (000) 000 00 00'
+        )
         .required('Обязательное поле'),
     password: Yup.string()
         .min(6, 'Минимальная длина пароля — 6 символов')
@@ -33,7 +37,7 @@ const initialValues: RegisterFormValues = {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phone: '+38',
     password: '',
     confirmPassword: ''
 };
@@ -47,7 +51,15 @@ export const RegisterForm: FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ errors, touched, isSubmitting, handleChange, handleBlur, values }) => (
+            {({
+                errors,
+                touched,
+                isSubmitting,
+                handleChange,
+                handleBlur,
+                values,
+                setFieldValue
+            }) => (
                 <Form className="grid gap-4 sm:gap-5">
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
                         <div className="grid gap-1.5 sm:gap-2">
@@ -144,14 +156,40 @@ export const RegisterForm: FC = () => {
                             id="phone"
                             name="phone"
                             type="tel"
-                            placeholder="+38 000 000 00 00"
+                            placeholder="+38 (000) 000 00 00"
                             autoComplete="tel"
                             value={values.phone}
                             onChange={(event) => {
                                 resetError();
-                                handleChange(event);
+                                const newValue = event.target.value;
+
+                                if (values.phone === '+38') {
+                                    const newDigits = newValue.replace(/\D/g, '');
+                                    if (newDigits.length < 2 || !newDigits.startsWith('38')) {
+                                        setFieldValue('phone', '+38');
+                                        return;
+                                    }
+                                }
+
+                                const formatted = formatPhoneNumber(newValue);
+                                setFieldValue('phone', formatted);
                             }}
-                            onBlur={handleBlur}
+                            onFocus={() => {
+                                if (
+                                    !values.phone ||
+                                    values.phone.trim() === '' ||
+                                    values.phone === '+38'
+                                ) {
+                                    setFieldValue('phone', '+38');
+                                }
+                            }}
+                            onBlur={(e) => {
+                                const digits = e.target.value.replace(/\D/g, '');
+                                if (!digits || digits === '38' || digits.length <= 2) {
+                                    setFieldValue('phone', '+38');
+                                }
+                                handleBlur(e);
+                            }}
                             className="h-10 text-sm leading-tight sm:h-11 sm:text-base"
                             aria-invalid={touched.phone && Boolean(errors.phone)}
                             aria-describedby="phone-error"

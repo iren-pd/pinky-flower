@@ -5,10 +5,13 @@ import { useAuthStore } from '@root/store';
 
 type LoginValues = {
     email: string;
+    phone: string;
     password: string;
 };
 
-export const useLogin = () => {
+type LoginType = 'email' | 'phone';
+
+export const useLogin = (loginType: LoginType = 'email') => {
     const login = useAuthStore.use.login();
     const isLoading = useAuthStore.use.isLoading();
     const error = useAuthStore.use.error();
@@ -24,12 +27,16 @@ export const useLogin = () => {
     const handleSubmit = useCallback(
         async (values: LoginValues, { setSubmitting }: FormikHelpers<LoginValues>) => {
             try {
-                await login(values);
+                if (loginType === 'email') {
+                    await login({ email: values.email, password: values.password });
+                } else {
+                    await login({ phone: values.phone, password: values.password });
+                }
             } finally {
                 setSubmitting(false);
             }
         },
-        [login]
+        [login, loginType]
     );
 
     return {

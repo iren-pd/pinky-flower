@@ -3,10 +3,17 @@ import { devtools } from 'zustand/middleware';
 
 import { createSelectors } from './utils/createSelectors';
 
-type Credentials = {
-    email: string;
-    password: string;
-};
+type Credentials =
+    | {
+          email: string;
+          phone?: never;
+          password: string;
+      }
+    | {
+          email?: never;
+          phone: string;
+          password: string;
+      };
 
 type RegistrationData = {
     firstName: string;
@@ -32,7 +39,7 @@ const useAuthStoreBase = create<AuthState>()(
         (set) => ({
             isLoading: false,
             error: null,
-            login: async ({ email, password }) => {
+            login: async ({ email, phone, password }) => {
                 set(
                     () => ({
                         isLoading: true,
@@ -44,7 +51,7 @@ const useAuthStoreBase = create<AuthState>()(
 
                 try {
                     await new Promise((resolve) => setTimeout(resolve, 750));
-                    console.info('Logged in with credentials:', { email, password });
+                    console.info('Logged in with credentials:', { email, phone, password });
 
                     set(
                         () => ({
