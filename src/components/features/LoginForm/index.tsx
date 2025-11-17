@@ -1,9 +1,12 @@
 import { Form, Formik } from 'formik';
+import { AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import type { FC } from 'react';
 import * as Yup from 'yup';
 
 import {
+    Alert,
+    AlertDescription,
     Button,
     Input,
     Label,
@@ -217,7 +220,12 @@ export const LoginForm: FC = () => {
                         )}
                     </div>
 
-                    {error && <p className="text-sm text-destructive">{error}</p>}
+                    {error && (
+                        <Alert variant="destructive">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                    )}
 
                     <Button
                         type="submit"

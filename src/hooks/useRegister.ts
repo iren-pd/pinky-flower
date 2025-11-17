@@ -34,10 +34,7 @@ export const useRegister = () => {
 
             try {
                 await register(payload);
-
                 navigate(RoutesPath.Root);
-            } catch {
-                // Ошибка уже обработана в store с toast
             } finally {
                 void confirmPassword;
                 setSubmitting(false);

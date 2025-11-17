@@ -1,8 +1,9 @@
 import { Form, Formik } from 'formik';
+import { AlertCircle } from 'lucide-react';
 import type { FC } from 'react';
 import * as Yup from 'yup';
 
-import { Button, Input, Label } from '@root/components/ui';
+import { Alert, AlertDescription, Button, Input, Label } from '@root/components/ui';
 import { useRegister } from '@root/hooks';
 import { formatPhoneNumber } from '@root/lib/utils';
 
@@ -260,7 +261,12 @@ export const RegisterForm: FC = () => {
                         )}
                     </div>
 
-                    {error && <p className="text-sm text-destructive">{error}</p>}
+                    {error && (
+                        <Alert variant="destructive">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{error}</AlertDescription>
+                        </Alert>
+                    )}
 
                     <Button
                         type="submit"
