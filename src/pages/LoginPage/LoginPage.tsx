@@ -1,24 +1,64 @@
 import { signInWithPopup } from 'firebase/auth';
 import { useState } from 'react';
 import type { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import { AnimatedLogoShort } from '@root/components/common/AnimatedLogoShort';
 import { LoginForm } from '@root/components/features/LoginForm';
 import { Button } from '@root/components/ui';
 import { auth, googleProvider } from '@root/lib/firebase';
 import { RoutesPath } from '@root/router/routes';
+import { useAuthStore } from '@root/store';
 
 const LoginPage: FC = () => {
+    const navigate = useNavigate();
     const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
+    const saveUserDataFromGoogleAuth = useAuthStore.use.saveUserDataFromGoogleAuth();
 
     const handleGoogleLogin = async () => {
         try {
             setIsGoogleLoading(true);
-            await signInWithPopup(auth, googleProvider);
-        } catch (error) {
-            console.error('Error signing in with Google:', error);
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+
+            await saveUserDataFromGoogleAuth({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName
+            });
+
+            toast.success('Вхід успішний!', {
+                description: 'Ви увійшли через Google'
+            });
+
+            navigate(RoutesPath.Root);
+        } catch (error: unknown) {
             setIsGoogleLoading(false);
+            let errorMessage = 'Не вдалося виконати вхід через Google';
+
+            if (error instanceof Error) {
+                const errorCode = (error as { code?: string }).code;
+                switch (errorCode) {
+                    case 'auth/popup-closed-by-user':
+                        errorMessage = 'Вікно авторизації було закрито';
+                        break;
+                    case 'auth/popup-blocked':
+                        errorMessage = 'Спливпопер заблоковано. Дозвольте спливні вікна';
+                        break;
+                    case 'auth/cancelled-popup-request':
+                        errorMessage = 'Авторизацію скасовано';
+                        break;
+                    case 'auth/network-request-failed':
+                        errorMessage = 'Помилка мережі. Перевірте підключення';
+                        break;
+                    default:
+                        errorMessage = error.message || 'Не вдалося виконати вхід через Google';
+                }
+            }
+
+            console.error('Error signing in with Google:', error);
+            toast.error('Помилка входу', { description: errorMessage });
         }
     };
 
@@ -41,7 +81,7 @@ const LoginPage: FC = () => {
                     </h1>
                     <p id="login-description" className="text-sm text-muted-foreground sm:text-sm">
                         Авторизуйтеся, щоб записуватися на улюблені тренування, стежити за розкладом
-                        і залишатися в формі разом з Pinky Flower.
+                        і залишатися у формі разом з Pinky Flower.
                     </p>
                 </header>
 

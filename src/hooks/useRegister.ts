@@ -1,6 +1,8 @@
 import type { FormikHelpers } from 'formik';
 import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { RoutesPath } from '@root/router/routes';
 import { useAuthStore } from '@root/store';
 
 type RegisterValues = {
@@ -13,6 +15,7 @@ type RegisterValues = {
 };
 
 export const useRegister = () => {
+    const navigate = useNavigate();
     const register = useAuthStore.use.register();
     const isLoading = useAuthStore.use.registerLoading();
     const error = useAuthStore.use.registerError();
@@ -31,12 +34,16 @@ export const useRegister = () => {
 
             try {
                 await register(payload);
+
+                navigate(RoutesPath.Root);
+            } catch {
+                // Ошибка уже обработана в store с toast
             } finally {
                 void confirmPassword;
                 setSubmitting(false);
             }
         },
-        [register]
+        [register, navigate]
     );
 
     return {
