@@ -21,23 +21,23 @@ const LoginPage: FC = () => {
                         id="login-heading"
                         className="text-2xl font-semibold text-foreground sm:text-3xl"
                     >
-                        Добро пожаловать
+                        Ласкаво просимо
                     </h1>
                     <p id="login-description" className="text-sm text-muted-foreground sm:text-sm">
-                        Авторизуйтесь, чтобы записываться на любимые тренировки, следить за
-                        расписанием и оставаться в форме вместе с Pinky Flower.
+                        Авторизуйтеся, щоб записуватися на улюблені тренування, стежити за розкладом
+                        і залишатися в формі разом з Pinky Flower.
                     </p>
                 </header>
 
                 <LoginForm />
 
                 <p className="text-center text-sm text-muted-foreground">
-                    Нет аккаунта?{' '}
+                    Немає акаунту?{' '}
                     <Link
                         to={RoutesPath.Register}
                         className="font-medium text-primary hover:underline"
                     >
-                        Зарегистрируйтесь
+                        Зареєструйтеся
                     </Link>
                 </p>
             </section>

@@ -16,21 +16,21 @@ type RegisterFormValues = {
 };
 
 const validationSchema = Yup.object<RegisterFormValues>({
-    firstName: Yup.string().trim().required('Обязательное поле'),
-    lastName: Yup.string().trim().required('Обязательное поле'),
-    email: Yup.string().email('Введите корректный email').required('Обязательное поле'),
+    firstName: Yup.string().trim().required("Обов'язкове поле"),
+    lastName: Yup.string().trim().required("Обов'язкове поле"),
+    email: Yup.string().email('Введіть коректний email').required("Обов'язкове поле"),
     phone: Yup.string()
         .matches(
             /^\+38 \(\d{3}\) \d{3} \d{2} \d{2}$/,
-            'Введите номер телефона в формате +38 (000) 000 00 00'
+            'Введіть номер телефону в форматі +38 (000) 000 00 00'
         )
-        .required('Обязательное поле'),
+        .required("Обов'язкове поле"),
     password: Yup.string()
-        .min(6, 'Минимальная длина пароля — 6 символов')
-        .required('Обязательное поле'),
+        .min(6, 'Мінімальна довжина пароля — 6 символів')
+        .required("Обов'язкове поле"),
     confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Пароли должны совпадать')
-        .required('Подтвердите пароль')
+        .oneOf([Yup.ref('password')], 'Паролі повинні збігатися')
+        .required('Підтвердіть пароль')
 });
 
 const initialValues: RegisterFormValues = {
@@ -67,12 +67,12 @@ export const RegisterForm: FC = () => {
                                 htmlFor="firstName"
                                 className="text-sm font-medium text-foreground"
                             >
-                                Имя
+                                Ім'я
                             </Label>
                             <Input
                                 id="firstName"
                                 name="firstName"
-                                placeholder="Екатерина"
+                                placeholder="Оксана"
                                 autoComplete="given-name"
                                 value={values.firstName}
                                 onChange={(event) => {
@@ -96,12 +96,12 @@ export const RegisterForm: FC = () => {
                                 htmlFor="lastName"
                                 className="text-sm font-medium text-foreground"
                             >
-                                Фамилия
+                                Прізвище
                             </Label>
                             <Input
                                 id="lastName"
                                 name="lastName"
-                                placeholder="Иванова"
+                                placeholder="Іваненко"
                                 autoComplete="family-name"
                                 value={values.lastName}
                                 onChange={(event) => {
@@ -123,7 +123,7 @@ export const RegisterForm: FC = () => {
 
                     <div className="grid gap-1.5 sm:gap-2">
                         <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                            Email
+                            Електронна пошта
                         </Label>
                         <Input
                             id="email"
@@ -209,7 +209,7 @@ export const RegisterForm: FC = () => {
                             id="password"
                             name="password"
                             type="password"
-                            placeholder="Придумайте пароль"
+                            placeholder="Вигадайте пароль"
                             autoComplete="new-password"
                             value={values.password}
                             onChange={(event) => {
@@ -233,13 +233,13 @@ export const RegisterForm: FC = () => {
                             htmlFor="confirmPassword"
                             className="text-sm font-medium text-foreground"
                         >
-                            Подтвердите пароль
+                            Підтвердіть пароль
                         </Label>
                         <Input
                             id="confirmPassword"
                             name="confirmPassword"
                             type="password"
-                            placeholder="Повторите пароль"
+                            placeholder="Повторіть пароль"
                             autoComplete="new-password"
                             value={values.confirmPassword}
                             onChange={(event) => {
@@ -267,7 +267,7 @@ export const RegisterForm: FC = () => {
                         disabled={isSubmitting || isLoading}
                         className="h-10 text-sm sm:h-10 sm:text-base"
                     >
-                        {isLoading ? 'Создаём аккаунт...' : 'Зарегистрироваться'}
+                        {isLoading ? 'Створюємо акаунт...' : 'Зареєструватися'}
                     </Button>
                 </Form>
             )}

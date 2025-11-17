@@ -21,26 +21,26 @@ const RegisterPage: FC = () => {
                         id="register-heading"
                         className="text-2xl font-semibold text-foreground sm:text-3xl"
                     >
-                        Создайте аккаунт
+                        Створіть акаунт
                     </h1>
                     <p
                         id="register-description"
                         className="text-sm text-muted-foreground sm:text-base"
                     >
-                        Заполните данные профиля, чтобы бронировать тренировки и управлять
-                        расписанием в Pinky Flower.
+                        Заповніть дані профілю, щоб бронювати тренування та керувати розкладом у
+                        Pinky Flower.
                     </p>
                 </header>
 
                 <RegisterForm />
 
                 <p className="text-center text-sm text-muted-foreground">
-                    Уже есть аккаунт?{' '}
+                    Вже є акаунт?{' '}
                     <Link
                         to={RoutesPath.Login}
                         className="font-medium text-primary hover:underline"
                     >
-                        Войти
+                        Увійти
                     </Link>
                 </p>
             </section>

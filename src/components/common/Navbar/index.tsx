@@ -8,12 +8,12 @@ export const Navbar: FC = () => {
 
     const navItems =
         pathname === RoutesPath.Login
-            ? [{ label: 'Регистрация', to: RoutesPath.Register }]
+            ? [{ label: 'Зареєструватися', to: RoutesPath.Register }]
             : pathname === RoutesPath.Register
-              ? [{ label: 'Логин', to: RoutesPath.Login }]
+              ? [{ label: 'Увійти', to: RoutesPath.Login }]
               : [
-                    { label: 'Логин', to: RoutesPath.Login },
-                    { label: 'Регистрация', to: RoutesPath.Register }
+                    { label: 'Увійти', to: RoutesPath.Login },
+                    { label: 'Зареєструватися', to: RoutesPath.Register }
                 ];
 
     return (

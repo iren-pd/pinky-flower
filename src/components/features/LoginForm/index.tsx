@@ -26,13 +26,13 @@ type LoginFormValues = {
 const createValidationSchema = (loginType: LoginType) => {
     const baseSchema = {
         password: Yup.string()
-            .min(6, 'Минимальная длина пароля — 6 символов')
-            .required('Обязательное поле')
+            .min(6, 'Мінімальна довжина пароля — 6 символів')
+            .required("Обов'язкове поле")
     };
 
     if (loginType === 'email') {
         return Yup.object<LoginFormValues>({
-            email: Yup.string().email('Введите корректный email').required('Обязательное поле'),
+            email: Yup.string().email('Введіть коректний email').required("Обов'язкове поле"),
             phone: Yup.string(),
             ...baseSchema
         });
@@ -43,9 +43,9 @@ const createValidationSchema = (loginType: LoginType) => {
         phone: Yup.string()
             .matches(
                 /^\+38 \(\d{3}\) \d{3} \d{2} \d{2}$/,
-                'Введите номер телефона в формате +38 (000) 000 00 00'
+                'Введіть номер телефону в форматі +38 (000) 000 00 00'
             )
-            .required('Обязательное поле'),
+            .required("Обов'язкове поле"),
         ...baseSchema
     });
 };
@@ -96,7 +96,7 @@ export const LoginForm: FC = () => {
                             <TabsTrigger value="phone">Телефон</TabsTrigger>
                         </TabsList>
 
-                        <TabsContent value="email" className="mt-0">
+                        <TabsContent value="email" className="mt-2">
                             <div className="grid gap-1.5 sm:gap-2">
                                 <Label
                                     htmlFor="email"
@@ -128,7 +128,7 @@ export const LoginForm: FC = () => {
                             </div>
                         </TabsContent>
 
-                        <TabsContent value="phone" className="mt-0">
+                        <TabsContent value="phone" className="mt-2">
                             <div className="grid gap-1.5 sm:gap-2">
                                 <Label
                                     htmlFor="phone"
@@ -198,7 +198,7 @@ export const LoginForm: FC = () => {
                             id="password"
                             name="password"
                             type="password"
-                            placeholder="Введите пароль"
+                            placeholder="Введіть пароль"
                             autoComplete="current-password"
                             value={values.password}
                             onChange={(event) => {
@@ -224,7 +224,7 @@ export const LoginForm: FC = () => {
                         disabled={isSubmitting || isLoading}
                         className="h-10 text-sm sm:h-11 sm:text-base"
                     >
-                        {isLoading ? 'Входим...' : 'Войти'}
+                        {isLoading ? 'Вхід...' : 'Увійти'}
                     </Button>
                 </Form>
             )}
