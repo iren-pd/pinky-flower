@@ -89,125 +89,135 @@ export const ProfileForm: FC<ProfileFormProps> = ({ profile, onSuccess }) => {
                 setFieldValue
             }) => (
                 <Form className="grid gap-5">
-                    <div className="grid gap-1.5">
-                        <Label htmlFor="firstName" className="text-sm font-medium text-foreground">
-                            Ім'я
-                        </Label>
-                        <Input
-                            id="firstName"
-                            name="firstName"
-                            type="text"
-                            placeholder="Введіть ім'я"
-                            value={values.firstName}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            className="h-10 text-sm"
-                            aria-invalid={touched.firstName && Boolean(errors.firstName)}
-                            aria-describedby="firstName-error"
-                        />
-                        {touched.firstName && errors.firstName && (
-                            <p id="firstName-error" className="text-sm text-destructive">
-                                {errors.firstName}
-                            </p>
-                        )}
+                    <div className="grid gap-6 sm:grid-cols-2">
+                        <div className="grid gap-1.5">
+                            <Label
+                                htmlFor="firstName"
+                                className="text-sm font-medium text-foreground"
+                            >
+                                Ім'я
+                            </Label>
+                            <Input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                placeholder="Введіть ім'я"
+                                value={values.firstName}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className="h-10 text-sm"
+                                aria-invalid={touched.firstName && Boolean(errors.firstName)}
+                                aria-describedby="firstName-error"
+                            />
+                            {touched.firstName && errors.firstName && (
+                                <p id="firstName-error" className="text-sm text-destructive">
+                                    {errors.firstName}
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="grid gap-1.5">
+                            <Label
+                                htmlFor="lastName"
+                                className="text-sm font-medium text-foreground"
+                            >
+                                Прізвище
+                            </Label>
+                            <Input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                placeholder="Введіть прізвище"
+                                value={values.lastName}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className="h-10 text-sm"
+                                aria-invalid={touched.lastName && Boolean(errors.lastName)}
+                                aria-describedby="lastName-error"
+                            />
+                            {touched.lastName && errors.lastName && (
+                                <p id="lastName-error" className="text-sm text-destructive">
+                                    {errors.lastName}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="grid gap-1.5">
-                        <Label htmlFor="lastName" className="text-sm font-medium text-foreground">
-                            Прізвище
-                        </Label>
-                        <Input
-                            id="lastName"
-                            name="lastName"
-                            type="text"
-                            placeholder="Введіть прізвище"
-                            value={values.lastName}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            className="h-10 text-sm"
-                            aria-invalid={touched.lastName && Boolean(errors.lastName)}
-                            aria-describedby="lastName-error"
-                        />
-                        {touched.lastName && errors.lastName && (
-                            <p id="lastName-error" className="text-sm text-destructive">
-                                {errors.lastName}
-                            </p>
-                        )}
-                    </div>
+                    <div className="grid gap-6 sm:grid-cols-2">
+                        <div className="grid gap-1.5">
+                            <Label htmlFor="email" className="text-sm font-medium text-foreground">
+                                Email
+                            </Label>
+                            <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="you@example.com"
+                                autoComplete="email"
+                                value={values.email}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                className="h-10 text-sm"
+                                aria-invalid={touched.email && Boolean(errors.email)}
+                                aria-describedby="email-error"
+                            />
+                            {touched.email && errors.email && (
+                                <p id="email-error" className="text-sm text-destructive">
+                                    {errors.email}
+                                </p>
+                            )}
+                        </div>
 
-                    <div className="grid gap-1.5">
-                        <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                            Email
-                        </Label>
-                        <Input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            autoComplete="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            className="h-10 text-sm"
-                            aria-invalid={touched.email && Boolean(errors.email)}
-                            aria-describedby="email-error"
-                        />
-                        {touched.email && errors.email && (
-                            <p id="email-error" className="text-sm text-destructive">
-                                {errors.email}
-                            </p>
-                        )}
-                    </div>
+                        <div className="grid gap-1.5">
+                            <Label htmlFor="phone" className="text-sm font-medium text-foreground">
+                                Телефон
+                            </Label>
+                            <Input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                placeholder="+38 (000) 000 00 00"
+                                value={values.phone}
+                                onChange={(event) => {
+                                    const newValue = event.target.value;
 
-                    <div className="grid gap-1.5">
-                        <Label htmlFor="phone" className="text-sm font-medium text-foreground">
-                            Телефон
-                        </Label>
-                        <Input
-                            id="phone"
-                            name="phone"
-                            type="tel"
-                            placeholder="+38 (000) 000 00 00"
-                            value={values.phone}
-                            onChange={(event) => {
-                                const newValue = event.target.value;
-
-                                if (values.phone === '+38') {
-                                    const newDigits = newValue.replace(/\D/g, '');
-                                    if (newDigits.length < 2 || !newDigits.startsWith('38')) {
-                                        setFieldValue('phone', '+38');
-                                        return;
+                                    if (values.phone === '+38') {
+                                        const newDigits = newValue.replace(/\D/g, '');
+                                        if (newDigits.length < 2 || !newDigits.startsWith('38')) {
+                                            setFieldValue('phone', '+38');
+                                            return;
+                                        }
                                     }
-                                }
 
-                                const formatted = formatPhoneNumber(newValue);
-                                setFieldValue('phone', formatted);
-                            }}
-                            onFocus={() => {
-                                if (
-                                    !values.phone ||
-                                    values.phone.trim() === '' ||
-                                    values.phone === '+38'
-                                ) {
-                                    setFieldValue('phone', '+38');
-                                }
-                            }}
-                            onBlur={(e) => {
-                                const digits = e.target.value.replace(/\D/g, '');
-                                if (!digits || digits === '38' || digits.length <= 2) {
-                                    setFieldValue('phone', '+38');
-                                }
-                                handleBlur(e);
-                            }}
-                            className="h-10 text-sm"
-                            aria-invalid={touched.phone && Boolean(errors.phone)}
-                            aria-describedby="phone-error"
-                        />
-                        {touched.phone && errors.phone && (
-                            <p id="phone-error" className="text-sm text-destructive">
-                                {errors.phone}
-                            </p>
-                        )}
+                                    const formatted = formatPhoneNumber(newValue);
+                                    setFieldValue('phone', formatted);
+                                }}
+                                onFocus={() => {
+                                    if (
+                                        !values.phone ||
+                                        values.phone.trim() === '' ||
+                                        values.phone === '+38'
+                                    ) {
+                                        setFieldValue('phone', '+38');
+                                    }
+                                }}
+                                onBlur={(e) => {
+                                    const digits = e.target.value.replace(/\D/g, '');
+                                    if (!digits || digits === '38' || digits.length <= 2) {
+                                        setFieldValue('phone', '+38');
+                                    }
+                                    handleBlur(e);
+                                }}
+                                className="h-10 text-sm"
+                                aria-invalid={touched.phone && Boolean(errors.phone)}
+                                aria-describedby="phone-error"
+                            />
+                            {touched.phone && errors.phone && (
+                                <p id="phone-error" className="text-sm text-destructive">
+                                    {errors.phone}
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     {error && (
@@ -224,7 +234,11 @@ export const ProfileForm: FC<ProfileFormProps> = ({ profile, onSuccess }) => {
                         </Alert>
                     )}
 
-                    <Button type="submit" disabled={isSubmitting || isLoading} className="h-10">
+                    <Button
+                        type="submit"
+                        disabled={isSubmitting || isLoading}
+                        className="h-10 md:w-1/3"
+                    >
                         {isLoading ? 'Збереження...' : 'Зберегти зміни'}
                     </Button>
                 </Form>

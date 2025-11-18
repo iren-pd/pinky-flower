@@ -271,7 +271,7 @@ export const RegisterForm: FC = () => {
                     <Button
                         type="submit"
                         disabled={isSubmitting || isLoading}
-                        className="h-10 text-sm sm:h-10 sm:text-base"
+                        className="mx-auto w-full md:w-1/2 h-10 text-sm sm:h-10 sm:text-base"
                     >
                         {isLoading ? 'Створюємо акаунт...' : 'Зареєструватися'}
                     </Button>
