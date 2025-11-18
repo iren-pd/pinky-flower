@@ -5,7 +5,7 @@ import {
     onAuthStateChanged,
     type User
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -39,6 +39,14 @@ type GoogleAuthUser = {
     displayName: string | null;
 };
 
+type UpdateProfileData = {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    avatarEmodji?: string;
+};
+
 type AuthState = {
     isLoading: boolean;
     error: string | null;
@@ -50,6 +58,8 @@ type AuthState = {
     register: (data: RegistrationData) => Promise<void>;
     resetRegisterError: () => void;
     saveUserDataFromGoogleAuth: (user: GoogleAuthUser) => Promise<void>;
+    updateProfile: (data: UpdateProfileData) => Promise<void>;
+    deleteAccount: () => Promise<void>;
     logout: () => Promise<void>;
 };
 
@@ -267,6 +277,63 @@ const useAuthStoreBase = create<AuthState>()(
                     false,
                     { type: 'auth/register/resetError' }
                 );
+            },
+            updateProfile: async (data) => {
+                const user = auth.currentUser;
+                if (!user) {
+                    throw new Error('Користувач не авторизований');
+                }
+
+                try {
+                    const userDocRef = doc(db, 'users', user.uid);
+                    const updateData: Record<string, unknown> = {
+                        updatedAt: new Date().toISOString()
+                    };
+
+                    if (data.firstName !== undefined) {
+                        updateData.firstName = data.firstName.trim();
+                    }
+                    if (data.lastName !== undefined) {
+                        updateData.lastName = data.lastName.trim();
+                    }
+                    if (data.email !== undefined) {
+                        updateData.email = data.email.trim().toLowerCase();
+                    }
+                    if (data.phone !== undefined) {
+                        const phoneDigits = data.phone.replace(/\D/g, '');
+                        updateData.phone = phoneDigits;
+                        updateData.phoneFormatted = data.phone;
+                    }
+                    if (data.avatarEmodji !== undefined) {
+                        updateData.avatarEmodji = data.avatarEmodji;
+                    }
+
+                    await updateDoc(userDocRef, updateData);
+                } catch (error) {
+                    console.error('Update profile error:', error);
+                    throw error;
+                }
+            },
+            deleteAccount: async () => {
+                const user = auth.currentUser;
+                if (!user) {
+                    throw new Error('Користувач не авторизований');
+                }
+
+                try {
+                    // Удаляем документ пользователя из Firestore
+                    const userDocRef = doc(db, 'users', user.uid);
+                    await updateDoc(userDocRef, {
+                        deletedAt: new Date().toISOString(),
+                        isDeleted: true
+                    });
+
+                    // Удаляем аккаунт из Firebase Auth
+                    await user.delete();
+                } catch (error) {
+                    console.error('Delete account error:', error);
+                    throw error;
+                }
             },
             logout: async () => {
                 try {

@@ -5,6 +5,7 @@ import { WithSuspense } from '@root/hocs/WithSuspense';
 import { HomePage } from '@root/pages/HomePage';
 import { LoginPage } from '@root/pages/LoginPage';
 import { NotFoundPage } from '@root/pages/NotFoundPage';
+import { ProfilePage } from '@root/pages/ProfilePage';
 import { RegisterPage } from '@root/pages/RegisterPage';
 import { RoutesPath } from '@root/router/routes';
 
@@ -26,6 +27,10 @@ export const router = createBrowserRouter(
                 {
                     path: RoutesPath.Register,
                     element: WithSuspense(<RegisterPage />)
+                },
+                {
+                    path: RoutesPath.Profile,
+                    element: WithSuspense(<ProfilePage />)
                 },
                 {
                     path: RoutesPath.NotFound,
