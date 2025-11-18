@@ -60,19 +60,26 @@ export const Navbar: FC = () => {
                 </DropdownMenu>
 
                 {/* Desktop buttons */}
-                <div className="hidden md:flex items-center">
-                    <Button asChild variant="link" className="rounded-full gap-2">
-                        <Link to="/profile">Мій профіль</Link>
+                <div className="hidden md:flex items-center gap-2">
+                    <Button asChild variant="ghost" className="gap-2">
+                        <Link to="/profile">
+                            <User className="h-4 w-4" />
+                            <span>Мій профіль</span>
+                        </Link>
                     </Button>
-                    <Button asChild variant="link" className="rounded-full gap-2">
-                        <Link to="/business">Для бізнесу</Link>
+                    <Button asChild variant="ghost" className="gap-2">
+                        <Link to="/business">
+                            <Building2 className="h-4 w-4" />
+                            <span>Для бізнесу</span>
+                        </Link>
                     </Button>
                     <Button
                         onClick={handleLogout}
-                        variant="link"
-                        className="rounded-full gap-2 text-red-600"
+                        variant="ghost"
+                        className="gap-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
                     >
-                        Вихід
+                        <LogOut className="h-4 w-4" />
+                        <span>Вихід</span>
                     </Button>
                 </div>
             </nav>
